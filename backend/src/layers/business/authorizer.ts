@@ -3,7 +3,7 @@ import { decode, verify } from 'jsonwebtoken';
 import * as createHttpError from 'http-errors';
 
 import { Jwt } from '../../utils/auth/Jwt';
-import { getRS256Certificate } from '../ports/authorizer';
+import { getRS256Certificate } from '../ports/Auth0/authorizer';
 
 /**
  * Get the authorization token from request headers.

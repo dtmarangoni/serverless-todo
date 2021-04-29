@@ -21,7 +21,7 @@ const serverlessConfiguration: AWS = {
         region: 'sa-east-1',
         runtime: 'nodejs14.x',
         stage: "${opt:stage, 'dev'}",
-        tracing: { apiGateway: true, lambda: true },
+        // tracing: { apiGateway: true, lambda: true },
         apiGateway: {
             minimumCompressionSize: 1024,
             shouldStartNameWithService: true,
@@ -29,11 +29,9 @@ const serverlessConfiguration: AWS = {
         environment: {
             AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
             TODO_TABLE: 'Todo-${self:provider.stage}',
-            TODO_ID_INDEX: 'TodoIDIndex',
+            TODO_INDEX: 'TodoIndex',
             IMAGES_S3_BUCKET: 'serverless-dtm-todo-images-${self:provider.stage}',
             S3_SIGNED_URL_EXP: '300',
-            // AUTH0_SECRET_ID: 'Auth0Secret-${self:provider.stage}',
-            // AUTH0_SECRET_FIELD: 'auth0Secret'
         },
         lambdaHashingVersion: '20201221',
     },
@@ -66,20 +64,20 @@ const serverlessConfiguration: AWS = {
                 Properties: {
                     TableName: '${self:provider.environment.TODO_TABLE}',
                     AttributeDefinitions: [
-                        { AttributeName: 'todoId', AttributeType: 'S' },
-                        { AttributeName: 'dueDate', AttributeType: 'S' },
                         { AttributeName: 'userId', AttributeType: 'S' },
+                        { AttributeName: 'dueDate', AttributeType: 'S' },
+                        { AttributeName: 'todoId', AttributeType: 'S' },
                     ],
                     KeySchema: [
-                        { AttributeName: 'todoId', KeyType: 'HASH' },
+                        { AttributeName: 'userId', KeyType: 'HASH' },
                         { AttributeName: 'dueDate', KeyType: 'RANGE' },
                     ],
                     LocalSecondaryIndexes: [
                         {
-                            IndexName: '${self:provider.environment.TODO_ID_INDEX}',
+                            IndexName: '${self:provider.environment.TODO_INDEX}',
                             KeySchema: [
-                                { AttributeName: 'todoId', KeyType: 'HASH' },
-                                { AttributeName: 'userId', KeyType: 'RANGE' },
+                                { AttributeName: 'userId', KeyType: 'HASH' },
+                                { AttributeName: 'todoId', KeyType: 'RANGE' },
                             ],
                             Projection: { ProjectionType: 'ALL' },
                         },
