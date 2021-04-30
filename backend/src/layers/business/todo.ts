@@ -1,18 +1,21 @@
 import 'source-map-support/register';
 import { Key } from 'aws-sdk/clients/dynamodb';
+import { v4 as uuidv4 } from 'uuid';
 import * as createHttpError from 'http-errors';
 
 import { TodoAccess } from '../ports/AWS/DynamoDB/todoAccess';
+import { CreateTodoRequest } from '../../requests/CreateTodoRequest';
+import { TodoItem } from '../../models/TodoItem';
 
 // The TODO Access port
 const todoAccess = new TodoAccess();
 
 /**
- * Get all user todo items from Todo DynamoDB table with optional
+ * Get all user todo items from Todo database table with optional
  * pagination.
  * @param userId The user ID.
  * @param limit The optional number of returned items per call.
- * @param exclusiveStartKey The optional DynamoDB TODO item key to
+ * @param exclusiveStartKey The optional database TODO item key to
  * start the query from.
  * @returns All user TODO items with optional pagination.
  */
@@ -27,8 +30,35 @@ export async function getAllUserTodos(userId: string, limit?: string, exclusiveS
         queryExclusiveStartKey = decodeNextKey(exclusiveStartKey);
     }
 
-    // Return the user TODO items
-    return await todoAccess.getAllUserTodos(userId, queryLimit, queryExclusiveStartKey);
+    // Get all user TODO items from DB
+    const todos = await todoAccess.getAllUserTodos(userId, queryLimit, queryExclusiveStartKey);
+    // Remove the user ID before the TODO items
+    return { items: rmUserIdFromArr(todos.items), lastEvaluatedKey: todos.lastEvaluatedKey };
+}
+
+/**
+ * Add a new TODO item to database.
+ * @param userId The user ID.
+ * @param todoParams The create TODO item request parameters.
+ * @returns The newly created TODO item.
+ */
+export async function createTodo(userId: string, todoParams: CreateTodoRequest) {
+    // Construct the new TODO item
+    let newTodo: TodoItem = {
+        userId,
+        todoId: uuidv4(),
+        createdAt: new Date().toISOString(),
+        name: todoParams.name,
+        dueDate: todoParams.dueDate,
+        done: false,
+        attachmentUrl: undefined,
+    };
+
+    // Add the new TODO item to DB
+    newTodo = await todoAccess.createTodo(newTodo);
+
+    // Remove the user ID before returning the newly created TODO item
+    return rmUserId(newTodo);
 }
 
 /**
@@ -45,7 +75,7 @@ function validateLimitParam(limit: string) {
 }
 
 /**
- * Encode last evaluated key from DynamoDB item.
+ * Encode last evaluated key from database item.
  * @param {Key} lastEvaluatedKey a JS object that represents last
  * evaluated key.
  * @return {string} URI encoded last evaluated key.
@@ -57,11 +87,36 @@ export function encodeNextKey(lastEvaluatedKey: Key): string {
 }
 
 /**
- * Decode last evaluated key from DynamoDB item.
+ * Decode last evaluated key from database item.
  * @param {string} lastEvaluatedKey a JS object that represents last
  * evaluated key.
  * @return {Key} URI encoded last evaluated key
  */
 function decodeNextKey(lastEvaluatedKey: string): Key {
     return JSON.parse(decodeURIComponent(lastEvaluatedKey));
+}
+
+/**
+ * Utility method to remove userId from TODO items. Useful for request
+ * responses.
+ * @param todo The complete TODO item.
+ * @returns The new TODO item without the userId property.
+ */
+function rmUserId(todo: TodoItem) {
+    const { userId, ...newTodo } = todo;
+    return newTodo;
+}
+
+/**
+ * Utility method to remove userId from an array of TODO items. Useful
+ * for request responses.
+ * @param todos The complete TODO items array.
+ * @returns The new TODO item array without the userId property.
+ */
+function rmUserIdFromArr(todos: TodoItem[]) {
+    const newTodos = todos.map((todo) => {
+        const { userId, ...newTodo } = todo;
+        return newTodo;
+    });
+    return newTodos;
 }

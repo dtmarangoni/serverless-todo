@@ -41,8 +41,12 @@ export function decodeToken(authToken: string): Jwt {
  * @returns The verified and decoded token.
  */
 function verifyRSAToken(token: string, rsaCertificate: string) {
-    // If the token is invalid this function will throw an error
-    return verify(token, rsaCertificate, { algorithms: ['RS256'], complete: true }) as Jwt;
+    try {
+        return verify(token, rsaCertificate, { algorithms: ['RS256'], complete: true }) as Jwt;
+    } catch (error) {
+        // Invalid token
+        throw new createHttpError.Unauthorized('Invalid token.');
+    }
 }
 
 /**
