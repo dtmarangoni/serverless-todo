@@ -5,6 +5,7 @@ import * as createHttpError from 'http-errors';
 
 import { TodoAccess } from '../ports/AWS/DynamoDB/todoAccess';
 import { CreateTodoRequest } from '../../requests/CreateTodoRequest';
+import { UpdateTodoRequest } from '../../requests/UpdateTodoRequest';
 import { TodoItem } from '../../models/TodoItem';
 
 // The TODO Access port
@@ -59,6 +60,25 @@ export async function createTodo(userId: string, todoParams: CreateTodoRequest) 
 
     // Remove the user ID before returning the newly created TODO item
     return rmUserId(newTodo);
+}
+
+/**
+ * Update a TODO item in DB according to update params.
+ * @param userId The user ID.
+ * @param todoId The TODO item ID.
+ * @param updateParams The update TODO item request parameters.
+ */
+export async function updateTodo(userId: string, todoId: string, updateParams: UpdateTodoRequest) {
+    // Check if the TODO item exists in DB
+    let todo = await todoAccess.getTodo(userId, todoId);
+
+    if (!todo) {
+        throw new createHttpError.BadRequest("This TODO item doesn't exists.");
+    } else {
+        // Update the TODO item properties
+        todo = { ...todo, ...updateParams };
+        await todoAccess.updateTodo(todo);
+    }
 }
 
 /**

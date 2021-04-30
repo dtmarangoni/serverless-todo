@@ -69,20 +69,21 @@ export class TodoAccess {
     }
 
     /**
-     * Gets a single TODO item per it's ID.
+     * Gets an user single TODO item per it's ID.
+     * @param userId The user ID.
      * @param todoId The TODO item ID.
      * @returns The TODO item.
      */
-    async getTodo(todoId: string): Promise<TodoItem[]> {
+    async getTodo(userId: string, todoId: string): Promise<TodoItem> {
         const todo = await this.dynamoDB
             .query({
                 TableName: this.todoTable,
                 IndexName: this.todoIndex,
-                KeyConditionExpression: 'todoId = :todoId',
-                ExpressionAttributeValues: { ':todoId': todoId },
+                KeyConditionExpression: 'userId = :userId AND todoId = :todoId',
+                ExpressionAttributeValues: { ':userId': userId, ':todoId': todoId },
             })
             .promise();
-        return todo.Items as TodoItem[];
+        return todo.Items[0] as TodoItem;
     }
 
     /**
