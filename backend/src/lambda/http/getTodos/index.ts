@@ -20,8 +20,10 @@ export const getTodos = {
         {
             Effect: 'Allow',
             Action: ['dynamoDB:Query'],
-            Resource:
+            Resource: [
                 'arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODO_TABLE}',
+                'arn:aws:dynamodb:${self:provider.region}:#{AWS::AccountId}:table/${self:provider.environment.TODO_TABLE}/index/${self:provider.environment.TODO_INDEX}',
+            ],
         },
     ],
 };

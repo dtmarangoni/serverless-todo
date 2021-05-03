@@ -114,7 +114,7 @@ export class TodoAccess {
         await this.dynamoDB
             .delete({
                 TableName: this.todoTable,
-                Key: { userId: todo.userId, dueDate: todo.dueDate, todoId: todo.todoId },
+                Key: { userId: todo.userId, todoId: todo.todoId },
             })
             .promise();
     }

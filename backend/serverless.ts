@@ -1,6 +1,6 @@
 import type { AWS } from '@serverless/typescript';
 
-import { getTodos, createTodo, updateTodo } from './src/lambda/http/index';
+import { getTodos, createTodo, updateTodo, deleteTodo } from './src/lambda/http/index';
 import { authorizer } from './src/lambda/auth/index';
 
 const serverlessConfiguration: AWS = {
@@ -56,7 +56,7 @@ const serverlessConfiguration: AWS = {
         },
         s3: { port: 6000 },
     },
-    functions: { authorizer, getTodos, createTodo, updateTodo },
+    functions: { authorizer, getTodos, createTodo, updateTodo, deleteTodo },
     resources: {
         Resources: {
             TodoDynamoDBTable: {
