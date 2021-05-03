@@ -59,10 +59,12 @@ export class TodoAccess {
         const result = await this.dynamoDB
             .query({
                 TableName: this.todoTable,
+                IndexName: this.todoIndex,
                 KeyConditionExpression: 'userId = :userId',
                 ExpressionAttributeValues: { ':userId': userId },
                 Limit: limit,
                 ExclusiveStartKey: exclusiveStartKey,
+                ScanIndexForward: true,
             })
             .promise();
         return { items: result.Items as TodoItem[], lastEvaluatedKey: result.LastEvaluatedKey };
@@ -78,7 +80,6 @@ export class TodoAccess {
         const todo = await this.dynamoDB
             .query({
                 TableName: this.todoTable,
-                IndexName: this.todoIndex,
                 KeyConditionExpression: 'userId = :userId AND todoId = :todoId',
                 ExpressionAttributeValues: { ':userId': userId, ':todoId': todoId },
             })
@@ -106,10 +107,15 @@ export class TodoAccess {
     }
 
     /**
-     * Deletes a TODO item by it`s ID from Todo DynamoDB Table.
-     * @param todoId The TODO item ID.
+     * Deletes a TODO item from Todo DynamoDB Table.
+     * @param todoId The TODO item.
      */
-    async deleteTodo(todoId: string): Promise<void> {
-        await this.dynamoDB.delete({ TableName: this.todoTable, Key: { todoId } }).promise();
+    async deleteTodo(todo: TodoItem): Promise<void> {
+        await this.dynamoDB
+            .delete({
+                TableName: this.todoTable,
+                Key: { userId: todo.userId, dueDate: todo.dueDate, todoId: todo.todoId },
+            })
+            .promise();
     }
 }

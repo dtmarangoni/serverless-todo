@@ -65,19 +65,19 @@ const serverlessConfiguration: AWS = {
                     TableName: '${self:provider.environment.TODO_TABLE}',
                     AttributeDefinitions: [
                         { AttributeName: 'userId', AttributeType: 'S' },
-                        { AttributeName: 'dueDate', AttributeType: 'S' },
                         { AttributeName: 'todoId', AttributeType: 'S' },
+                        { AttributeName: 'dueDate', AttributeType: 'S' },
                     ],
                     KeySchema: [
                         { AttributeName: 'userId', KeyType: 'HASH' },
-                        { AttributeName: 'dueDate', KeyType: 'RANGE' },
+                        { AttributeName: 'todoId', KeyType: 'RANGE' },
                     ],
                     LocalSecondaryIndexes: [
                         {
                             IndexName: '${self:provider.environment.TODO_INDEX}',
                             KeySchema: [
                                 { AttributeName: 'userId', KeyType: 'HASH' },
-                                { AttributeName: 'todoId', KeyType: 'RANGE' },
+                                { AttributeName: 'dueDate', KeyType: 'RANGE' },
                             ],
                             Projection: { ProjectionType: 'ALL' },
                         },

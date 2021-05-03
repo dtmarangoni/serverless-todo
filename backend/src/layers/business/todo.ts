@@ -63,22 +63,30 @@ export async function createTodo(userId: string, todoParams: CreateTodoRequest) 
 }
 
 /**
- * Update a TODO item in DB according to update params.
+ * Update a TODO item in database according to update params.
  * @param userId The user ID.
  * @param todoId The TODO item ID.
  * @param updateParams The update TODO item request parameters.
  */
 export async function updateTodo(userId: string, todoId: string, updateParams: UpdateTodoRequest) {
     // Check if the TODO item exists in DB
-    let todo = await todoAccess.getTodo(userId, todoId);
+    let todo = await todoExists(userId, todoId);
+    // Update the TODO item properties
+    todo = { ...todo, ...updateParams };
+    // Update the TODO item in DB
+    await todoAccess.updateTodo(todo);
+}
 
-    if (!todo) {
-        throw new createHttpError.BadRequest("This TODO item doesn't exists.");
-    } else {
-        // Update the TODO item properties
-        todo = { ...todo, ...updateParams };
-        await todoAccess.updateTodo(todo);
-    }
+/**
+ * Delete a TODO item from database.
+ * @param userId The user ID.
+ * @param todoId The TODO item ID.
+ */
+export async function deleteTodo(userId: string, todoId: string) {
+    // Check if the TODO item exists in DB
+    const todo = await todoExists(userId, todoId);
+    // Delete the TODO item from DB
+    await todoAccess.deleteTodo(todo);
 }
 
 /**
@@ -139,4 +147,21 @@ function rmUserIdFromArr(todos: TodoItem[]) {
         return newTodo;
     });
     return newTodos;
+}
+
+/**
+ * Check whether a TODO item exists in database.
+ * @param userId The TODO user ID owner.
+ * @param todoId The TODO item ID.
+ * @returns The TODO item in case it exists or throw an error
+ * otherwise.
+ */
+async function todoExists(userId: string, todoId: string) {
+    let todo = await todoAccess.getTodo(userId, todoId);
+
+    if (!todo) {
+        throw new createHttpError.BadRequest("This TODO item doesn't exists.");
+    }
+
+    return todo;
 }
