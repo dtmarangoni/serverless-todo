@@ -24,7 +24,7 @@ const handler: ValidatedEventAPIGatewayProxyEventV2<typeof createTodoSchema> = a
 
     logger.info('New TODO item added to DB', newTodo);
 
-    // Return the response with groups items
+    // Return the CREATED response with the new TODO item
     return formatJSONResponse(201, { item: newTodo });
 };
 

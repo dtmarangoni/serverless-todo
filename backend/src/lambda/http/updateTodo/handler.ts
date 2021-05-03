@@ -29,7 +29,7 @@ const handler: ValidatedEventAPIGatewayProxyEventV2<typeof updateTodoSchema> = a
 
     logger.info('TODO item updated for an user', { userId });
 
-    // Return the response with groups items
+    // Return the OK response with an empty body
     return formatJSONResponse(200, {});
 };
 

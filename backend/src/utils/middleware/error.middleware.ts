@@ -1,3 +1,4 @@
+import 'source-map-support/register';
 import { formatJSONResponse } from '../lambda';
 import { createLogger } from '../logger';
 

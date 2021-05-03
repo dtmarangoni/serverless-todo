@@ -30,7 +30,7 @@ const handler: APIGatewayProxyHandlerV2 = async (
 
     logger.info('Retrieved TODOs from an user', { userId: context.userId, todos });
 
-    // Return the response with groups items
+    // Return the response with TODO items
     return formatJSONResponse(200, {
         items: todos.items,
         // Encode the Key JSON object so a client can return it in an

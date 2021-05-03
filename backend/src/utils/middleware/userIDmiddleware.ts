@@ -1,3 +1,4 @@
+import 'source-map-support/register';
 import { decodeToken, getAuthToken } from '../../layers/business/authorizer';
 
 /**

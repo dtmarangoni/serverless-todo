@@ -7,6 +7,7 @@ import { TodoAccess } from '../ports/AWS/DynamoDB/todoAccess';
 import { CreateTodoRequest } from '../../requests/CreateTodoRequest';
 import { UpdateTodoRequest } from '../../requests/UpdateTodoRequest';
 import { TodoItem } from '../../models/TodoItem';
+import { fileStoreUrl } from './fileStore';
 
 // The TODO Access port
 const todoAccess = new TodoAccess();
@@ -44,15 +45,18 @@ export async function getAllUserTodos(userId: string, limit?: string, exclusiveS
  * @returns The newly created TODO item.
  */
 export async function createTodo(userId: string, todoParams: CreateTodoRequest) {
+    // Generate an unique TODO item ID
+    const todoId = uuidv4();
+
     // Construct the new TODO item
     let newTodo: TodoItem = {
         userId,
-        todoId: uuidv4(),
+        todoId,
         createdAt: new Date().toISOString(),
         name: todoParams.name,
         dueDate: todoParams.dueDate,
         done: false,
-        attachmentUrl: undefined,
+        attachmentUrl: `${fileStoreUrl}/${todoId}`,
     };
 
     // Add the new TODO item to DB
@@ -64,7 +68,7 @@ export async function createTodo(userId: string, todoParams: CreateTodoRequest) 
 
 /**
  * Update a TODO item in database according to update params.
- * @param userId The user ID.
+ * @param userId The TODO item owner user ID.
  * @param todoId The TODO item ID.
  * @param updateParams The update TODO item request parameters.
  */
@@ -79,7 +83,7 @@ export async function updateTodo(userId: string, todoId: string, updateParams: U
 
 /**
  * Delete a TODO item from database.
- * @param userId The user ID.
+ * @param userId The TODO item owner user ID.
  * @param todoId The TODO item ID.
  */
 export async function deleteTodo(userId: string, todoId: string) {

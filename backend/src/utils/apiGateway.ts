@@ -1,3 +1,4 @@
+import 'source-map-support/register';
 import type {
     APIGatewayProxyEventV2,
     APIGatewayProxyResultV2,

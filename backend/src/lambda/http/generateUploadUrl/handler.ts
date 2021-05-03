@@ -6,11 +6,11 @@ import {
 } from 'aws-lambda';
 
 import { createLogger } from '../../../utils/logger';
-import { deleteTodo as removeTodo } from '../../../layers/business/todo';
+import { getPutPreSignedUrl } from '../../../layers/business/fileStore';
 import { formatJSONResponse, middyfy } from '../../../utils/lambda';
 
 // Winston logger
-const logger = createLogger('deleteTodo');
+const logger = createLogger('generateUploadUrl');
 
 const handler: APIGatewayProxyHandlerV2 = async (
     event: APIGatewayProxyEventV2,
@@ -21,15 +21,16 @@ const handler: APIGatewayProxyHandlerV2 = async (
     // Get the TODO ID from path params
     const todoId = event.pathParameters.todoId;
 
-    logger.info('Deleting a TODO item for an user', { userId, todoId });
+    logger.info('Generating a pre-signed upload URL', { userId, todoId });
 
-    // Delete the TODO item from DB
-    await removeTodo(userId, todoId);
+    // Get the file store pre-signed URL
+    const signedUrl = getPutPreSignedUrl(todoId);
 
-    logger.info('TODO item deleted for an user', { userId });
+    logger.info('Pre-signed URL generated', { signedUrl });
 
-    // Return the OK response with an empty body
-    return formatJSONResponse(200, {});
+    // Return the pre-signed URL to allow object upload to file store
+    // for a TODO item image
+    return formatJSONResponse(200, { uploadUrl: signedUrl });
 };
 
-export const deleteTodo = middyfy(handler);
+export const generateUploadUrl = middyfy(handler);
