@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "d0700d24-79ec-487e-8403-b565bef7f8e0",
-		"name": "Udacity C4 Project",
+		"_postman_id": "120a8874-1a9e-46f3-99bf-0c9b3b278a2e",
+		"name": "Serverless Udacity Project",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -11,31 +11,50 @@
 				{
 					"name": "Get all todos",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos",
+							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/todos",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
 								"execute-api",
-								"us-east-1",
+								"{{region}}",
 								"amazonaws",
 								"com"
 							],
 							"path": [
 								"dev",
 								"todos"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "nextKey",
+									"value": null,
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -44,6 +63,16 @@
 				{
 					"name": "Create todo",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -53,22 +82,23 @@
 								"type": "text"
 							},
 							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Water flowers\",\n\t\"dueDate\": \"2019-06-11\"\n}"
+							"raw": "{\n\t\"name\": \"Task 1\",\n\t\"dueDate\": \"2021-05-10T09:01:40.214Z\"\n}"
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos",
+							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/todos",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
 								"execute-api",
-								"us-east-1",
+								"{{region}}",
 								"amazonaws",
 								"com"
 							],
@@ -83,7 +113,17 @@
 				{
 					"name": "Update todo",
 					"request": {
-						"method": "PUT",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -92,29 +132,30 @@
 								"value": "application/json"
 							},
 							{
-								"key": "Authorization",
+								"key": "",
 								"type": "text",
-								"value": "Bearer {{authToken}}"
+								"value": "",
+								"disabled": true
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Change the world\",\n\t\"dueDate\": \"2019-12-11\",\n\t\"done\": true\n}"
+							"raw": "{\n\t\"name\": \"Task 4\",\n\t\"dueDate\": \"2021-05-15T09:01:40.214Z\",\n\t\"done\": true\n}"
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos/35dd600f-43c2-4649-903c-615e1586a26f",
+							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/todos/a63c6023-4ab7-46dc-ad56-9f42862e400a",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
 								"execute-api",
-								"us-east-1",
+								"{{region}}",
 								"amazonaws",
 								"com"
 							],
 							"path": [
 								"dev",
 								"todos",
-								"35dd600f-43c2-4649-903c-615e1586a26f"
+								"a63c6023-4ab7-46dc-ad56-9f42862e400a"
 							]
 						}
 					},
@@ -123,6 +164,16 @@
 				{
 					"name": "Delete todo",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [
 							{
@@ -132,9 +183,10 @@
 								"value": "application/json"
 							},
 							{
-								"key": "Authorization",
+								"key": "",
 								"type": "text",
-								"value": "Bearer {{authToken}}"
+								"value": "",
+								"disabled": true
 							}
 						],
 						"body": {
@@ -142,12 +194,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos/fe671583-4512-45f6-9475-4265c04362fb",
+							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/todos/fe671583-4512-45f6-9475-4265c04362fb",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
 								"execute-api",
-								"us-east-1",
+								"{{region}}",
 								"amazonaws",
 								"com"
 							],
@@ -163,12 +215,23 @@
 				{
 					"name": "Get attachment URL",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"body": {
@@ -176,19 +239,19 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos/3836b777-9bc4-4429-9b79-ba4e4f5f91c0/attachment",
+							"raw": "https://{{apiId}}.execute-api.{{region}}.amazonaws.com/dev/todos/98a39644-57bf-4ba6-8ef5-017137bfa54a/attachment",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
 								"execute-api",
-								"us-east-1",
+								"{{region}}",
 								"amazonaws",
 								"com"
 							],
 							"path": [
 								"dev",
 								"todos",
-								"3836b777-9bc4-4429-9b79-ba4e4f5f91c0",
+								"98a39644-57bf-4ba6-8ef5-017137bfa54a",
 								"attachment"
 							]
 						}
@@ -200,7 +263,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "ce2b42d4-8cc5-4f30-a6ed-e7f0f303c3fd",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -210,7 +272,256 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "efb16c49-3866-4241-97d1-360ad72736d8",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Offline TODOs",
+			"item": [
+				{
+					"name": "Get all todos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{serverlessOfflineHost}}/dev/todos",
+							"host": [
+								"{{serverlessOfflineHost}}"
+							],
+							"path": [
+								"dev",
+								"todos"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "5",
+									"disabled": true
+								},
+								{
+									"key": "nextKey",
+									"value": "%7B%22userId%22%3A%22google-oauth2%7C111815299994673063400%22%2C%22dueDate%22%3A%222021-02-02T10%3A30%3A10.688Z%22%7D",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create todo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Task 2\",\n\t\"dueDate\": \"2021-06-10T09:01:40.214Z\"\n}"
+						},
+						"url": {
+							"raw": "{{serverlessOfflineHost}}/dev/todos",
+							"host": [
+								"{{serverlessOfflineHost}}"
+							],
+							"path": [
+								"dev",
+								"todos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update todo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Task 2\",\n\t\"dueDate\": \"2021-05-11T09:01:40.214Z\",\n\t\"done\": true\n}"
+						},
+						"url": {
+							"raw": "{{serverlessOfflineHost}}/dev/todos/2f0f0988-daa6-4c4d-a354-b259fb713089",
+							"host": [
+								"{{serverlessOfflineHost}}"
+							],
+							"path": [
+								"dev",
+								"todos",
+								"2f0f0988-daa6-4c4d-a354-b259fb713089"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete todo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{serverlessOfflineHost}}/dev/todos/2f0f0988-daa6-4c4d-a354-b259fb713089",
+							"host": [
+								"{{serverlessOfflineHost}}"
+							],
+							"path": [
+								"dev",
+								"todos",
+								"2f0f0988-daa6-4c4d-a354-b259fb713089"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get attachment URL",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{serverlessOfflineHost}}/dev/todos/44189c28-8078-484e-8a76-45f4f7b888f6/attachment",
+							"host": [
+								"{{serverlessOfflineHost}}"
+							],
+							"path": [
+								"dev",
+								"todos",
+								"44189c28-8078-484e-8a76-45f4f7b888f6",
+								"attachment"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -224,7 +535,6 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "2e83c0fe-6650-44d5-a90f-4c27ff720d83",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -234,7 +544,6 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "977c227e-2df3-42eb-9a48-ec25e2f7eeae",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -244,16 +553,20 @@
 	],
 	"variable": [
 		{
-			"id": "bf208e6b-f66d-4008-9366-dd541ff65425",
 			"key": "apiId",
-			"value": "",
-			"type": "string"
+			"value": "le8djvzu64"
 		},
 		{
-			"id": "9bc6399a-d2bb-4f2d-9ffa-8480370d383c",
 			"key": "authToken",
-			"value": "",
-			"type": "string"
+			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Im5wTExmNEpRSnZjdlViRFFSakJTRiJ9.eyJpc3MiOiJodHRwczovL2R0bS51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTE4MTUyOTk5OTQ2NzMwNjM0MDAiLCJhdWQiOiJiWlpvY3VaMlZGQ0RKNVdBV0pxSGY5REpPZVZZY2FBUCIsImlhdCI6MTYxOTYyMDQ4NywiZXhwIjozNjAxNjE5NjIwNDg3LCJhdF9oYXNoIjoiUG9ENzFOUm5XQ2NTS0o1OG11R2tqQSIsIm5vbmNlIjoiRXM5WU45ZjlFOW12SkFCdnV6Y0FZaFRRVkM4M2N2bC0ifQ.xcYcYNN2fJSq3SAKcDwz3DnDFgxMpoSOHSCjdDZlBi6vxaFneLWYCMMqIHzPL1rr33lhQt6kMVoVLu1fsIwUitbtwsUMh63_89y2mo--2ELXJfmQw1akNV1vH5Pw_qjoxv9nAeMaJvieQvVzwDlmGhuDNaIn-vSQKqMxeaf6gCMGqKeSYDvgnlWoafOCRC9gn3TaHJXNkn8RX3ygBhruq79RTzdVJj7uETbEYOw5QuihLnLU4eCvQ7qIiLv-vfJxdetgaycLpaUjxATI_-RzO7l7yWjRFluR2q1HO24cEI43wf93eysI0Z58DAgC2rZOTKra2bvFTvCsh_pLATrL4w"
+		},
+		{
+			"key": "region",
+			"value": "sa-east-1"
+		},
+		{
+			"key": "serverlessOfflineHost",
+			"value": "http://localhost:4000"
 		}
 	]
 }
