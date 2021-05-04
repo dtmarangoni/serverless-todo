@@ -1,41 +1,42 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# TODO APP React Frontend
 
-## Available Scripts
+A React frontend Web App for the fourth project of Udacity Cloud Developer Nanodegree.
 
-In the project directory, you can run:
+It consumes an AWS serverless backend API.
 
-### `npm start`
+All frontend code was provided as part of the course.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Installation instructions
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+1. Requirements:
 
-### `npm test`
+    - [Install Node.js](https://nodejs.org/en/) (tested with Node.Js 14);
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. In the project root folder, please run:
 
-### `npm run build`
+    - Download and install the required npm packages: `npm i`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. Please update the config environment file:
+    - Add your API Gateway backend API ID in variable `apiId`;
+    - Add the AWS Region where the API Gateway backend API was deployed, in variable `region`;
+    - For local backend execution, with Serverless offline, comment the line with variable `apiEndpoint`, and uncomment the line `http://localhost:4000/dev`;
+    - Add your Auth0 APP token authentication and authorization settings:
+        - Auth0 APP domain in variable `domain`;
+        - Auth0 APP client ID in variable `clientId`;
+        - Auth0 APP callback URL in variable `callbackUrl`.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+# Start the Local Dev Server
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+In the project root folder, please run:
 
-### `npm run eject`
+-   Run the local dev server: `npm start`
+-   Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Reference
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The reference code and detailed installation instructions can be found in the link below:
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+-   [React Frontend Web App](https://github.com/udacity/cloud-developer/tree/master/course-04/project/c4-final-project-starter-code/client)
 
 ## Learn More
 
