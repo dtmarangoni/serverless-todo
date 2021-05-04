@@ -27,7 +27,7 @@ const serverlessConfiguration: AWS = {
         region: 'sa-east-1',
         runtime: 'nodejs14.x',
         stage: "${opt:stage, 'dev'}",
-        // tracing: { apiGateway: true, lambda: true },
+        tracing: { apiGateway: true, lambda: true },
         apiGateway: {
             minimumCompressionSize: 1024,
             shouldStartNameWithService: true,
@@ -140,40 +140,6 @@ const serverlessConfiguration: AWS = {
                     RestApiId: { Ref: 'ApiGatewayRestApi' },
                 },
             },
-            // KMSKey: {
-            //   Type: 'AWS::KMS::Key',
-            //   Properties: {
-            //     Description: 'KMS key to encrypt Auth0 secret',
-            //     KeyPolicy: {
-            //       Version: '2012-10-17',
-            //       Id: 'key-default-1',
-            //       Statement: [
-            //         {
-            //           Sid: 'Enable IAM User Permissions',
-            //           Effect: 'Allow',
-            //           Principal: { AWS: 'arn:aws:iam::#{AWS::AccountId}:root' },
-            //           Action: 'kms:*',
-            //           Resource: '*'
-            //         }
-            //       ]
-            //     }
-            //   }
-            // },
-            // KMSKeyAlias: {
-            //   Type: 'AWS::KMS::Alias',
-            //   Properties: {
-            //     AliasName: 'alias/auth0Key-${self:provider.stage}',
-            //     TargetKeyId: { Ref: 'KMSKey' }
-            //   }
-            // },
-            // Auth0Secret: {
-            //   Type: 'AWS::SecretsManager::Secret',
-            //   Properties: {
-            //     Name: '${self:provider.environment.AUTH0_SECRET_ID}',
-            //     Description: 'Auth0 secret',
-            //     KmsKeyId: { Ref: 'KMSKey' }
-            //   }
-            // }
         },
     },
 };

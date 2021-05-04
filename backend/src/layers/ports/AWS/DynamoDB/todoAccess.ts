@@ -25,8 +25,7 @@ export class TodoAccess {
      */
     private static createDBClient() {
         // Encapsulate AWS SDK to use AWS X-Ray
-        // const XAWS = AWSXRay.captureAWS(AWS);
-        const XAWS = AWS;
+        const XAWS = AWSXRay.captureAWS(AWS);
 
         // Serverless running in offline mode
         if (process.env.IS_OFFLINE) {
