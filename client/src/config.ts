@@ -1,7 +1,7 @@
 // API Gateway backend API ID
-const apiId = 'le8djvzu64';
+const apiId = '...';
 // AWS Region where the API Gateway backend API is deployed
-const region = 'sa-east-1';
+const region = '...';
 // API Gateway backend API endpoint
 export const apiEndpoint = `https://${apiId}.execute-api.${region}.amazonaws.com/dev`;
 
@@ -10,7 +10,7 @@ export const apiEndpoint = `https://${apiId}.execute-api.${region}.amazonaws.com
 
 // Auth0 configurations - update it for you own APP
 export const authConfig = {
-    domain: 'dtm.us.auth0.com',
-    clientId: 'bZZocuZ2VFCDJ5WAWJqHf9DJOeVYcaAP',
+    domain: '...',
+    clientId: '...',
     callbackUrl: 'http://localhost:3000/callback',
 };
