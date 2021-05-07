@@ -554,15 +554,15 @@
 	"variable": [
 		{
 			"key": "apiId",
-			"value": "le8djvzu64"
+			"value": ""
 		},
 		{
 			"key": "authToken",
-			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Im5wTExmNEpRSnZjdlViRFFSakJTRiJ9.eyJpc3MiOiJodHRwczovL2R0bS51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTE4MTUyOTk5OTQ2NzMwNjM0MDAiLCJhdWQiOiJiWlpvY3VaMlZGQ0RKNVdBV0pxSGY5REpPZVZZY2FBUCIsImlhdCI6MTYxOTYyMDQ4NywiZXhwIjozNjAxNjE5NjIwNDg3LCJhdF9oYXNoIjoiUG9ENzFOUm5XQ2NTS0o1OG11R2tqQSIsIm5vbmNlIjoiRXM5WU45ZjlFOW12SkFCdnV6Y0FZaFRRVkM4M2N2bC0ifQ.xcYcYNN2fJSq3SAKcDwz3DnDFgxMpoSOHSCjdDZlBi6vxaFneLWYCMMqIHzPL1rr33lhQt6kMVoVLu1fsIwUitbtwsUMh63_89y2mo--2ELXJfmQw1akNV1vH5Pw_qjoxv9nAeMaJvieQvVzwDlmGhuDNaIn-vSQKqMxeaf6gCMGqKeSYDvgnlWoafOCRC9gn3TaHJXNkn8RX3ygBhruq79RTzdVJj7uETbEYOw5QuihLnLU4eCvQ7qIiLv-vfJxdetgaycLpaUjxATI_-RzO7l7yWjRFluR2q1HO24cEI43wf93eysI0Z58DAgC2rZOTKra2bvFTvCsh_pLATrL4w"
+			"value": ""
 		},
 		{
 			"key": "region",
-			"value": "sa-east-1"
+			"value": ""
 		},
 		{
 			"key": "serverlessOfflineHost",
