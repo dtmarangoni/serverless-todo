@@ -3,7 +3,7 @@ import { JwksClient } from 'jwks-rsa';
 import * as createHttpError from 'http-errors';
 
 // JSON web key set client
-const jwksClient = new JwksClient({ jwksUri: 'https://dtm.us.auth0.com/.well-known/jwks.json' });
+const jwksClient = new JwksClient({ jwksUri: '...YOUR AUTH0 JSON Web Key Set Endpoint...' });
 
 /**
  * Get the Auth0 RS256 certificate used to sign JWTs.
